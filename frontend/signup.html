@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Artisan</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo"><a href="index.html">Artisan.</a></div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="products.html">Shop</a>
+        </nav>
+    </header>
+
+    <main class="auth-page">
+        <div class="auth-container glass-effect">
+            <h2>Join Artisan</h2>
+            <p>Create an account to buy or sell handmade goods</p>
+            <div id="signupError" class="error-msg"></div>
+            <form id="signupForm">
+                <div class="form-group account-type">
+                    <label>Account Type</label>
+                    <div class="radio-group" style="display: flex; gap: 20px;">
+                        <label><input type="radio" name="role" value="user" checked> Shopper</label>
+                        <label><input type="radio" name="role" value="vendor"> Artisan / Vendor</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required placeholder="you@example.com">
+                </div>
+                <div class="form-group" id="phoneGroup" style="display: none;">
+                    <label for="phone">Phone Number (Required for Vendors)</label>
+                    <input type="tel" id="phone" placeholder="123-456-7890">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" id="signupBtn">Sign Up</button>
+            </form>
+            <div class="auth-links">
+                <p>Already have an account? <a href="login.html">Log in</a></p>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/signup.js"></script>
+</body>
+</html>

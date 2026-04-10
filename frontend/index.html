@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artisan - Handmade Goods Marketplace</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">Artisan.</div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="products.html">Shop</a>
+        </nav>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search handmade goods...">
+            <button id="searchBtn"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="nav-actions">
+            <a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i> <span id="cartCount">0</span></a>
+            <div id="authLinks">
+                <a href="login.html" class="btn btn-outline">Log In</a>
+                <a href="signup.html" class="btn btn-primary">Sign Up</a>
+            </div>
+            <div id="userMenu" style="display: none;">
+                <a href="dashboard.html" class="btn btn-secondary"><i class="fas fa-user"></i> Dashboard</a>
+                <button id="logoutBtn" class="btn btn-outline">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main id="app">
+        <!-- Hero Section -->
+        <section class="hero glass-effect">
+            <div class="hero-content">
+                <h1 class="hero-title">Discover Unique Handcrafted Goods</h1>
+                <p class="hero-subtitle">Support local artisans by shopping our curated collection of handmade jewelry, pottery, art, and more.</p>
+                <div class="hero-buttons">
+                    <a href="products.html" class="btn btn-primary" style="font-size: 1.2rem; padding: 15px 30px;">Shop Now</a>
+                </div>
+            </div>
+            <div class="hero-graphics">
+                <div class="glass-card decorative-card card-1">Pottery</div>
+                <div class="glass-card decorative-card card-2">Jewelry</div>
+                <div class="glass-card decorative-card card-3">Art</div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="categories-section">
+            <h2 class="section-title">Shop by Category</h2>
+            <div class="categories-grid">
+                <a href="products.html?category=Handmade Jewelry" class="category-card">
+                    <i class="fas fa-gem"></i>
+                    <h3>Jewelry</h3>
+                </a>
+                <a href="products.html?category=Pottery" class="category-card">
+                    <i class="fas fa-beer"></i>
+                    <h3>Pottery</h3>
+                </a>
+                <a href="products.html?category=Wood Crafts" class="category-card">
+                    <i class="fas fa-tree"></i>
+                    <h3>Wood Crafts</h3>
+                </a>
+                <a href="products.html?category=Paintings" class="category-card">
+                    <i class="fas fa-paint-brush"></i>
+                    <h3>Paintings</h3>
+                </a>
+            </div>
+        </section>
+
+        <!-- Dynamic Featured/Recommendations Section -->
+        <section class="featured-section">
+            <h2 class="section-title">Featured Picks For You</h2>
+            <div id="homeRecommendations" class="product-grid">
+                <!-- Products loaded dynamically -->
+                <div class="loading-spinner"></div>
+            </div>
+        </section>
+
+        <!-- AI Assistant Fab -->
+        <div class="ai-fab" id="aiChatBtn">
+            <i class="fas fa-robot"></i>
+        </div>
+        <div class="ai-chat-window glass-effect" id="aiChatWindow" style="display: none;">
+            <div class="ai-header">
+                <h3>Artisan Assistant</h3>
+                <button id="closeAiChat"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="ai-messages" id="aiMessages">
+                <div class="msg ai-msg">Hi! I can help you find products or learn about selling on Artisan.</div>
+            </div>
+            <div class="ai-input">
+                <input type="text" id="aiInputStr" placeholder="Ask me anything...">
+                <button id="sendAiBtn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Artisan.</h3>
+                <p>Discover unique handcrafted items from local artisans and vendors.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Explore</h4>
+                <a href="products.html">All Products</a>
+                <a href="#">Categories</a>
+                <a href="#">Featured Artists</a>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <a href="#">FAQ</a>
+                <a href="#">Shipping</a>
+                <a href="#">Returns</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Artisan Marketplace. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

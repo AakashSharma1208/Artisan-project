@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - Artisan</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .product-detail-layout {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+        .detail-gallery {
+            flex: 1;
+        }
+        .detail-main-img {
+            width: 100%;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .detail-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .detail-category {
+            color: var(--secondary-color);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .detail-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .detail-price {
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .detail-desc {
+            color: var(--text-light);
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        .detail-vendor {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: var(--background-color);
+            border-radius: 8px;
+        }
+        .add-to-cart-group {
+            display: flex;
+            gap: 20px;
+            margin-top: auto;
+        }
+        .quantity-input {
+            width: 80px;
+        }
+        @media (max-width: 768px) {
+            .product-detail-layout {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo"><a href="index.html">Artisan.</a></div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="products.html">Shop</a>
+        </nav>
+        <div class="nav-actions">
+            <a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i> <span id="cartCount">0</span></a>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="productDetailContainer">
+            <div class="loading-spinner" style="text-align: center; margin-top: 50px;">Loading product...</div>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/product-detail.js"></script>
+</body>
+</html>

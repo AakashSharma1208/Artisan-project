@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Artisan</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .shop-layout {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .shop-filters {
+            width: 250px;
+            flex-shrink: 0;
+        }
+        .shop-content {
+            flex: 1;
+        }
+        .filter-group {
+            margin-bottom: 25px;
+            background: var(--white);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+        }
+        .filter-group h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .filter-list label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo"><a href="index.html">Artisan.</a></div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="products.html" style="color: var(--secondary-color);">Shop</a>
+        </nav>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search handmade goods...">
+            <button id="searchBtn"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="nav-actions">
+            <a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i> <span id="cartCount">0</span></a>
+            <div id="authLinks">
+                <a href="login.html" class="btn btn-outline">Log In</a>
+                <a href="signup.html" class="btn btn-primary">Sign Up</a>
+            </div>
+            <div id="userMenu" style="display: none;">
+                <a href="dashboard.html" class="btn btn-secondary"><i class="fas fa-user"></i> Dashboard</a>
+                <button id="logoutBtn" class="btn btn-outline">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <h2 class="section-title" style="margin-top: 20px;" id="pageTitle">All Products</h2>
+        
+        <div class="shop-layout">
+            <aside class="shop-filters">
+                <div class="filter-group">
+                    <h3>Categories</h3>
+                    <div class="filter-list" id="categoryFilters">
+                        <label><input type="radio" name="cat" value="" checked> All</label>
+                        <label><input type="radio" name="cat" value="Handmade Jewelry"> Handmade Jewelry</label>
+                        <label><input type="radio" name="cat" value="Pottery"> Pottery</label>
+                        <label><input type="radio" name="cat" value="Wood Crafts"> Wood Crafts</label>
+                        <label><input type="radio" name="cat" value="Paintings"> Paintings</label>
+                        <label><input type="radio" name="cat" value="Handmade Clothing"> Handmade Clothing</label>
+                        <label><input type="radio" name="cat" value="Home Decor"> Home Decor</label>
+                        <label><input type="radio" name="cat" value="Traditional Art"> Traditional Art</label>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="shop-content">
+                <div id="productList" class="product-grid">
+                    <div class="loading-spinner">Loading products...</div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/products.js"></script>
+</body>
+</html>
