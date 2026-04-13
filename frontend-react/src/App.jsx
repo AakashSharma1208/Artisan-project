@@ -17,6 +17,8 @@ import PublicVendorProfilePage from './pages/PublicVendorProfilePage';
 import CheckoutPage from './pages/CheckoutPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsOfServicePage from './pages/TermsOfServicePage';
 
 // Admin Imports
 import AdminLayout from './components/AdminLayout';
@@ -89,6 +91,8 @@ const App = () => {
               <Route path="/vendor/:id" element={<AnimatedPage><PublicVendorProfilePage /></AnimatedPage>} />
               <Route path="/about" element={<AnimatedPage><AboutPage /></AnimatedPage>} />
               <Route path="/contact" element={<AnimatedPage><ContactPage /></AnimatedPage>} />
+              <Route path="/privacy" element={<AnimatedPage><PrivacyPolicyPage /></AnimatedPage>} />
+              <Route path="/terms" element={<AnimatedPage><TermsOfServicePage /></AnimatedPage>} />
             </Route>
           </Routes>
         </AnimatePresence>

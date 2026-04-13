@@ -38,6 +38,10 @@ const ProductCard = ({ product, index = 0 }) => {
             alt={product.productName}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             loading="lazy"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = 'https://images.unsplash.com/photo-1541692641319-981cc79ee10a?auto=format&fit=crop&w=800&q=60'; // A very stable Unsplash craft placeholder
+            }}
           />
           {/* Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

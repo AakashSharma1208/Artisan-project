@@ -1,3 +1,4 @@
+const axios = require('axios');
 const Product = require('../models/Product');
 
 // @desc    AI Chatbot endpoint using external API
@@ -7,45 +8,64 @@ exports.chatWithAI = async (req, res) => {
     try {
         const { message } = req.body;
         
+        console.log('--- Chatbot Request Started ---');
+        console.log(`User Message: "${message}"`);
+
         // Ensure API key is set
-        if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === 'YOUR_API_KEY_HERE') {
-            return res.status(500).json({ reply: 'AI service is currently not configured. Please add an API key.' });
+        const apiKey = process.env.OPENAI_API_KEY;
+        if (!apiKey || apiKey === 'YOUR_API_KEY_HERE') {
+            console.warn('Backend Warning: OpenAI API key is missing or not configured.');
+            return res.status(500).json({ 
+                reply: 'AI service is currently not configured on the server. Please check environment variables.' 
+            });
         }
 
-        const systemPrompt = `You are a helpful assistant for the Artisan marketplace. 
+        const systemPrompt = `You are a helpful assistant for the Artisan marketplace named "Artisan AI". 
 You help users find handmade goods, jewelry, pottery, and art. 
-Keep your answers very brief and friendly, limited to 2-3 sentences.`;
+Keep your answers brief (2-3 sentences max) and friendly. 
+You are integrated into the Artisan website, an e-commerce platform for high-quality handcrafted products.`;
 
-        // Direct fetch call to OpenAI to avoid needing the SDK package, keeping it lightweight
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
-            },
-            body: JSON.stringify({
+        try {
+            const response = await axios.post('https://api.openai.com/v1/chat/completions', {
                 model: 'gpt-3.5-turbo',
                 messages: [
                     { role: 'system', content: systemPrompt },
                     { role: 'user', content: message }
                 ],
                 max_tokens: 150
-            })
-        });
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                }
+            });
 
-        if (!response.ok) {
-            console.error('OpenAI Error:', await response.text());
-            return res.status(500).json({ reply: 'Sorry, I am having trouble connecting to my brain right now.' });
+            const reply = response.data.choices[0].message.content.trim();
+            console.log(`AI Response: "${reply}"`);
+            console.log('--- Chatbot Request Success ---');
+            
+            res.json({ reply });
+
+        } catch (apiError) {
+            console.error('OpenAI API Error Details:');
+            if (apiError.response) {
+                console.error(`- Status: ${apiError.response.status}`);
+                console.error(`- Data:`, apiError.response.data);
+            } else {
+                console.error(`- Message: ${apiError.message}`);
+            }
+            
+            // Helpful message for the user
+            let userFriendlyMessage = 'Sorry, my AI brain is experiencing technical difficulties. Please try again in a moment.';
+            if (apiError.response?.status === 401) userFriendlyMessage = 'AI Authentication failed. Please check the server configuration.';
+            if (apiError.response?.status === 429) userFriendlyMessage = 'I am currently receiving too many requests. Please take a quick break!';
+
+            res.status(500).json({ reply: userFriendlyMessage });
         }
-
-        const data = await response.json();
-        const reply = data.choices[0].message.content.trim();
-        
-        res.json({ reply });
         
     } catch (error) {
-        console.error('Chatbot API Error:', error);
-        res.status(500).json({ message: 'Error processing your message' });
+        console.error('Chatbot Controller Internal Error:', error);
+        res.status(500).json({ message: 'Internal server error processing chatbot request' });
     }
 };
 

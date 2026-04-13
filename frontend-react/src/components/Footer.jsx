@@ -9,12 +9,12 @@ const Footer = ({ darkMode }) => {
       { label: 'Shop', to: '/shop' },
     ],
     Company: [
-      { label: 'About', to: '#' },
-      { label: 'Contact', to: '#' },
+      { label: 'About', to: '/about' },
+      { label: 'Contact', to: '/contact' },
     ],
     Legal: [
-      { label: 'Privacy Policy', to: '#' },
-      { label: 'Terms of Service', to: '#' },
+      { label: 'Privacy Policy', to: '/privacy' },
+      { label: 'Terms of Service', to: '/terms' },
     ],
   };
 

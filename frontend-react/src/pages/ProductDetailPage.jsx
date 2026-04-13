@@ -176,7 +176,7 @@ const ProductDetailPage = () => {
                           <span className="text-5xl font-bold text-primary-300">{vendor?.vendorName?.charAt(0)?.toUpperCase() || 'V'}</span>
                         )}
                     </div>
-                    <Link to={`/vendor/${vendor._id}`} className="btn-secondary text-xs px-4 py-2 border-primary-700 hover:bg-primary-800 text-white hover:border-primary-600">Visit Shop</Link>
+                    <Link to={`/vendor/${vendor._id}`} className="btn-secondary text-xs px-4 py-2 border-primary-700 hover:bg-primary-800 text-primary-900 hover:text-white transition-colors">Visit Shop</Link>
                  </div>
                  
                  <div className="md:col-span-3 space-y-6">

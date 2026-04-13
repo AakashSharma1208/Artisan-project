@@ -93,4 +93,8 @@ export const adminService = {
   updateOrderStatus: (id, status) => api.put(`/admin/orders/${id}/status`, { status }),
 };
 
+export const statsService = {
+  getPublicStats: () => api.get('/platform-stats'),
+};
+
 export default api;

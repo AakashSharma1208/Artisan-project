@@ -1,7 +1,8 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Instagram, ArrowRight, Code2, Cpu, LayoutDashboard } from 'lucide-react';
+import { statsService } from '../services/api';
 
 const TEAM = [
   {
@@ -33,12 +34,35 @@ const TEAM = [
   },
 ];
 
-const STATS = [
-  { value: '500+', label: 'Artisans Onboarded' },
-  { value: '10K+', label: 'Products Listed' },
-  { value: '50K+', label: 'Happy Customers' },
-  { value: '25+', label: 'Cities Covered' },
-];
+// Counter Component for smooth number animation
+const Counter = ({ target, duration = 2 }) => {
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (latest) => Math.round(latest));
+  const [displayText, setDisplayText] = useState(0);
+
+  useEffect(() => {
+    const controls = animate(count, target, { 
+      duration: duration,
+      ease: "easeOut" 
+    });
+    return controls.stop;
+  }, [target, duration]);
+
+  useEffect(() => {
+    return rounded.onChange((latest) => {
+      setDisplayText(latest);
+    });
+  }, [rounded]);
+
+  return <span>{displayText}</span>;
+}
+
+const StatSkeleton = () => (
+  <div className="text-center animate-pulse">
+    <div className="h-10 w-24 bg-slate-200 dark:bg-slate-800 rounded-lg mx-auto mb-2" />
+    <div className="h-4 w-32 bg-slate-100 dark:bg-slate-800/50 rounded mx-auto" />
+  </div>
+);
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -50,6 +74,50 @@ const fadeUp = {
 };
 
 const AboutPage = () => {
+  const [stats, setStats] = useState({
+    vendors: 0,
+    products: 0,
+    customers: 0,
+    cities: 0
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadStats = async () => {
+      try {
+        const res = await statsService.getPublicStats();
+        if (res.success) {
+          setStats({
+            vendors: res.data.totalVendors,
+            products: res.data.totalProducts,
+            customers: res.data.totalCustomers,
+            cities: res.data.totalCities
+          });
+        }
+      } catch (err) {
+        console.error("Failed to fetch statistics:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // Initial load
+    loadStats();
+
+    // Poll every 10 seconds for real-time updates
+    const interval = setInterval(loadStats, 10000);
+
+    // Cleanup interval on unmount
+    return () => clearInterval(interval);
+  }, []);
+
+  const statsList = [
+    { value: stats.vendors, label: 'Artisans Onboarded', suffix: stats.vendors >= 100 ? '+' : '' },
+    { value: stats.products, label: 'Products Listed', suffix: stats.products >= 100 ? '+' : '' },
+    { value: stats.customers, label: 'Happy Customers', suffix: stats.customers >= 100 ? '+' : '' },
+    { value: stats.cities, label: 'Cities Covered', suffix: stats.cities >= 10 ? '+' : '' },
+  ];
+
   return (
     <div className="dark:bg-slate-950 min-h-screen">
 
@@ -91,17 +159,23 @@ const AboutPage = () => {
       <section className="py-16 bg-white dark:bg-slate-900 border-y border-slate-100 dark:border-slate-800">
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {STATS.map((stat, i) => (
-              <motion.div
-                key={i}
-                variants={fadeUp} initial="hidden" whileInView="visible" custom={i}
-                viewport={{ once: true }}
-                className="text-center"
-              >
-                <p className="font-poppins font-black text-4xl gradient-text mb-1">{stat.value}</p>
-                <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">{stat.label}</p>
-              </motion.div>
-            ))}
+            {loading ? (
+              [...Array(4)].map((_, i) => <StatSkeleton key={i} />)
+            ) : (
+              statsList.map((stat, i) => (
+                <motion.div
+                  key={i}
+                  variants={fadeUp} initial="hidden" whileInView="visible" custom={i}
+                  viewport={{ once: true }}
+                  className="text-center"
+                >
+                  <p className="font-poppins font-black text-4xl gradient-text mb-1">
+                    <Counter target={stat.value} />{stat.suffix}
+                  </p>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">{stat.label}</p>
+                </motion.div>
+              ))
+            )}
           </div>
         </div>
       </section>
