@@ -5,13 +5,15 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-console.log('--- RESTARTING ARTISAN SERVER ---');
-console.log('Route Registered: /api/public-stats');
+console.log('--- STARTING ARTISAN SERVER ---');
 
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: '*',
+    credentials: true
+}));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
@@ -32,11 +34,12 @@ const contactRoutes = require('./routes/contactRoutes');
 const { googleOAuthRedirect, googleOAuthCallback } = require('./controllers/authController');
 const { getStats } = require('./controllers/statsController');
 
-// Root level Google OAuth routes exactly as requested
+// Google OAuth routes
 app.get('/auth/google', googleOAuthRedirect);
+app.get('/auth/google/callback', googleOAuthCallback);
+
 // Public Statistics Routes
 app.get('/api/platform-stats', getStats);
-app.get('/api/stats-test', (req, res) => res.json({ success: true, message: 'Stats endpoint reachable' }));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
@@ -61,4 +64,3 @@ mongoose.connect(process.env.MONGODB_URI)
     console.error('MongoDB connection error:', err);
 });
 
-// Force nodemon reboot trigger 3

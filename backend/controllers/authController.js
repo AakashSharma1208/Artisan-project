@@ -202,7 +202,8 @@ exports.googleAuth = async (req, res) => {
 exports.googleOAuthRedirect = (req, res) => {
     const clientId = process.env.GOOGLE_CLIENT_ID;
     const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-    const redirectUri = 'http://localhost:5000/auth/google/callback';
+    const backendUrl = process.env.BACKEND_URL || 'http://localhost:5000';
+    const redirectUri = `${backendUrl}/auth/google/callback`;
 
     const oAuth2Client = new OAuth2Client(clientId, clientSecret, redirectUri);
     
@@ -232,7 +233,8 @@ exports.googleOAuthCallback = async (req, res) => {
     try {
         const clientId = process.env.GOOGLE_CLIENT_ID;
         const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-        const redirectUri = 'http://localhost:5000/auth/google/callback';
+        const backendUrl = process.env.BACKEND_URL || 'http://localhost:5000';
+        const redirectUri = `${backendUrl}/auth/google/callback`;
 
         const oAuth2Client = new OAuth2Client(clientId, clientSecret, redirectUri);
 
